@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Users show</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h2>Success! Welcome, {{userinfo.first_name}}!</h2>
+        <br>
+        <h3 style="color:green">Successfully registered(or log in)!</h3>
+    </div>
+</body>
+
+</html>

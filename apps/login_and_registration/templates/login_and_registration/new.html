@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>New User</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+
+</head>
+
+<body>
+    <div class="wrapper">
+
+        {% if messages %} {% for message in messages %}
+        <h1 style="color:orange">{{message}}</h1>
+        {% endfor %} {% endif %}
+
+        <form action="/semi_restful_users/create" method="post">
+            {% csrf_token %}
+            <div class="form-square">
+                <label for="first-Name">First Name: </label>
+                <input type="text" name="firstName" id="first-Name" value="">
+
+                <label for="last-Name">Last Name: </label>
+                <input type="text" name="lastName" id="last-Name" value="">
+
+                <label for="email">Email: </label>
+                <input type="text" name="email" id="email" value="">
+
+                <input id="submit-button" type="submit" value="Create">
+            </div>
+        </form>
+        <br>
+        <a href="/semi_restful_users">Go Back</a>
+    </div>
+</body>
+
+</html>

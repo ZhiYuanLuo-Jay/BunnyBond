@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>login_and_registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+</head>
+
+<body>
+    {# {{friends}} #}
+    <div class="wrapper">
+
+        {% if messages %} {% for message in messages %}
+        <h1 style="color:orange">{{message}}</h1>
+        {% endfor %} {% endif %}
+
+        <h1>Registration</h1>
+        <!-- registration -->
+        <form action='/login_and_registration/signup' method='POST'>
+            {% csrf_token %}
+            <div>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="fn">
+            </div>
+            <div>
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="ln">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" id="email-regi" name="email-regi">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password-regi" name="pasw">
+            </div>
+            <div>
+                <label for="password_confirm">Confrim PW:</label>
+                <input type="password" id="password_confirm" name="paswcf">
+            </div>
+            <input class="submit-btn" type="submit" name="register" value="Register">
+        </form>
+
+
+        <h1>Login</h1>
+        <!-- login -->
+        <form action='/login_and_registration/login' method='POST'>
+            <div class="form-square">
+                {% csrf_token %}
+                <div>
+                    <label>Email: </label>
+                    <input type="text" id="email-logi" name="email">
+                </div>
+                <div>
+                    <label>Password: </label>
+                    <input type="password" id="password-logi" name="pswd">
+                </div>
+
+                <input class="submit-btn" type="submit" name="login" value="submit">
+
+            </div>
+        </form>
+
+
+
+
+    </div>
+
+    </div>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit User</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+
+</head>
+
+<body>
+    {# {{userinfo}} #}
+    <div class="wrapper">
+
+        {% if messages %} {% for message in messages %}
+        <h1 style="color:orange">{{message}}</h1>
+        {% endfor %} {% endif %}
+
+        <h2>Edit User {{userinfo.id}}</h2>
+        <form action="/semi_restful_users/{{userinfo.id}}/update" method="post">
+            {% csrf_token %}
+            <div class="form-square">
+                <label for="first-Name">First Name: </label>
+                <input type="text" name="firstName" id="first-Name" value="{{userinfo.first_name}}">
+
+                <label for="last-Name">Last Name: </label>
+                <input type="text" name="lastName" id="last-Name" value="{{userinfo.last_name}}">
+
+                <label for="email">Email: </label>
+                <input type="text" name="email" id="email" value="{{userinfo.email}}">
+
+                <input id="submit-button" type="submit" value="Update">
+            </div>
+        </form>
+        <br>
+        <a href="/semi_restful_users/{{userinfo.id}}">Show</a> | <a href="/semi_restful_users">Go Back</a>
+    </div>
+</body>
+
+</html>
