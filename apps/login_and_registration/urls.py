@@ -4,6 +4,8 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^login$', views.login),       
     url(r'^signup$', views.register),       
+    url(r'^logout$', views.logoff),       
+    url(r'^next$', views.nextpage),       
 
     # url(r'^(?P<id>\d+)$', views.show),
     # url(r'^new$', views.new),

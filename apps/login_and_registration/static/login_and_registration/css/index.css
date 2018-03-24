@@ -32,3 +32,33 @@ label {
 h1 {
     margin-bottom: 15px;
 }
+
+#page-header {
+    height: 40px;
+    border-bottom: 1px solid black;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+#page-header h2,
+#page-header h3,
+#page-header h4 {
+    display: inline-block;
+    color: black;
+    margin-top: 0px;
+}
+
+#page-header h2 {
+    width: 750px;
+}
+
+#page-header h3,
+#page-header h4 {
+    margin-right: 10px;
+}
+
+#page-header a {
+    width: 90px;
+    text-align: right;
+    color: blue;
+}

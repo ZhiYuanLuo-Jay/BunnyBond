@@ -24,6 +24,9 @@ def login(request):
             loginEmail = request.POST['email']
             user = users.objects.get(email=loginEmail)
             # add user session here for different pages
+            # print user.first_name
+            request.session['user_id'] = user.id            
+            request.session['user_name'] = user.first_name            
             return render(request, 'login_and_registration/success.html', {'userinfo' : user})  
 
 def register(request):
@@ -37,10 +40,18 @@ def register(request):
             hash1 = bcrypt.hashpw(request.POST['pasw'].encode(), bcrypt.gensalt())
             users.objects.create(first_name=request.POST['fn'], last_name=request.POST['ln'], \
             email=request.POST['email-regi'], password=hash1, salt=bcrypt.gensalt())
-            
-            return redirect('/login_and_registration')      
-            # user = users.objects.get(id=1)
-            # user.password = hash1
-            # user.salt = bcrypt.gensalt()
-            # user.save()
+            # save email, pull user info from database
+            loginEmail = request.POST['email-regi']
+            user = users.objects.get(email=loginEmail)
+            request.session['user_id'] = user.id            
+            request.session['user_name'] = user.first_name              
+            return redirect('/login_and_registration/next')      
     
+def nextpage(request):
+    print request.session['user_id'] 
+    return render(request, 'login_and_registration/success_1.html')  
+
+def logoff(request):
+    request.session['user_id'] = ""
+    request.session['user_name'] = ""
+    return redirect("/login_and_registration")

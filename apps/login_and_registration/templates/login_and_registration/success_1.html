@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Page 1</title>
+    <title>Page 2</title>
     <!-- linking a css style sheet -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
@@ -16,11 +16,7 @@
             <h4>{{request.session.user_name}}</h4>
             <a href="/login_and_registration/logout">log off</a>
         </div>
-        <h2>Success! Welcome, {{userinfo.first_name}}!</h2>
-        <br>
-        <h3 style="color:green">Successfully registered(or log in)!</h3>
-        <br>
-        <a href="/login_and_registration/next">Next page</a>
+        <h2 style="color:indianred">H Mart</h2>
     </div>
 </body>
 
