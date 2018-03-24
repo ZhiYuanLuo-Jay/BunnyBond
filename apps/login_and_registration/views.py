@@ -24,7 +24,6 @@ def login(request):
             loginEmail = request.POST['email']
             user = users.objects.get(email=loginEmail)
             # add user session here for different pages
-            # print user.first_name
             request.session['user_id'] = user.id            
             request.session['user_name'] = user.first_name            
             return render(request, 'login_and_registration/success.html', {'userinfo' : user})  
