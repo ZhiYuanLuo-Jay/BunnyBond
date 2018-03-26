@@ -24,8 +24,10 @@ SECRET_KEY = 'bc=*6(r9q9x(kuk+0kv1nft6(_0c)3n=vpujtings(%pd*@=o2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+# DEBUG = True
 
 ALLOWED_HOSTS = ['13.57.32.2']
+# ALLOWED_HOSTS = []
 
 
 # Application definition

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Page 2</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+</head>
+
+<body>
+    {# {{all_wish_user}} #}
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Hello, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <a id="home-logout" href="/dashboard">Home</a>
+            <a href="/logout">logout</a>
+        </div>
+        <h3>Users who added this product/item under their list:</h3>
+        <br>
+        <br> {% for usr in all_wish_user %}
+        <h4>{{usr.first_name}}</h4>
+        {% endfor %}
+
+
+
+    </div>
+</body>
+
+</html>

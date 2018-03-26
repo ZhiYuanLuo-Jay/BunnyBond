@@ -17,7 +17,7 @@
 
         <h1>Registration</h1>
         <!-- registration -->
-        <form action='/login_and_registration/signup' method='POST'>
+        <form action='/signup' method='POST'>
             {% csrf_token %}
             <div>
                 <label for="first_name">First Name:</label>
@@ -45,7 +45,7 @@
 
         <h1>Login</h1>
         <!-- login -->
-        <form action='/login_and_registration/login' method='POST'>
+        <form action='/login' method='POST'>
             <div class="form-square">
                 {% csrf_token %}
                 <div>

@@ -44,11 +44,23 @@ class UsersManager(models.Manager):
             errors["match"] = "Password entered not matched."        
         if len(postData['email-regi']) == 0:
             errors["email-regi"] = "Email needs to be entered."
+        if not EMAIL_REGEX.match(postData['email-regi']):
+            errors["format"] = "Email format is not invalid!"            
         if len(postData['email-regi']) != 0:
             # print users.objects.filter(email=postData['email-regi'])            
             if len(users.objects.filter(email=postData['email-regi'])) != 0:
                 errors["email-duplicate"] = "Email exists already."
         return errors
+
+
+    def add_validator(self, postData):
+        # print postData     
+        errors = {}
+        if len(postData['product']) == 0:
+            errors["product"] = "Product entered can not be empty."
+        if len(postData['product']) < 3:
+            errors["product_long"] = "Item name should be more than 2 characters"            
+        return errors        
         
 
 class users(models.Model):
@@ -64,6 +76,11 @@ class users(models.Model):
         return "<User object: {} {} {} {}>".format(self.first_name, self.last_name, self.email, self.password, self.salt)
     
 
-
-
-
+class wishlist(models.Model):
+    item_name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)    
+    user = models.ForeignKey(users, related_name = "user_wish")
+    user_wish = models.ManyToManyField(users, related_name = "added_wish")
+    def __repr__(self):
+        return "<User object: {}>".format(self.item_name)

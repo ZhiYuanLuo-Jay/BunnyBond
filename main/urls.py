@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^login_and_registration/', include('apps.login_and_registration.urls')),
+    url(r'^', include('apps.login_and_registration.urls')),
     # And now we use the include function to pull in our first_app.urls
     url(r'^admin/', admin.site.urls)
 ]

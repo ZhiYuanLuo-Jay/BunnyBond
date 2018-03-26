@@ -35,7 +35,6 @@ h1 {
 
 #page-header {
     height: 40px;
-    border-bottom: 1px solid black;
     padding: 0px;
     margin-bottom: 10px;
 }
@@ -61,4 +60,33 @@ h1 {
     width: 90px;
     text-align: right;
     color: blue;
+}
+
+#home-logout {
+    margin-left: 600px;
+}
+
+#user-wish {
+    border: 1px solid black;
+    margin-left: 0px;
+    margin-bottom: 30px;
+}
+
+#other-wish {
+    border: 1px solid black;
+    margin-left: 0px;
+}
+
+thead tr th:not(:first-child) {
+    padding-right: 25px;
+    border-left: 1px solid black;
+}
+
+tbody tr td:not(:first-child) {
+    padding-right: 25px;
+    border-left: 1px solid black;
+}
+
+#submit-add {
+    margin-left: 600px;
 }
