@@ -7,7 +7,7 @@ import re, os, binascii
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-class UsersManager(models.Manager):
+class UserManager(models.Manager):
     def basic_validator(self, postData):
         # print postData     
         errors = {}
@@ -19,10 +19,10 @@ class UsersManager(models.Manager):
             if not EMAIL_REGEX.match(postData['email']):
                 errors["format"] = "Email format is not invalid!"
             try:
-                user = users.objects.get(email=postData['email'])
+                user = User.objects.get(email=postData['email'])
                 loginEmail = postData['email']
                 loginPswd  = postData['pswd']
-                user = users.objects.get(email=loginEmail)
+                user = User.objects.get(email=loginEmail)
                 if not bcrypt.checkpw(loginPswd.encode(), user.password.encode()):
                     errors["incorrect"] = "Password Incorrect."
             except:
@@ -47,8 +47,7 @@ class UsersManager(models.Manager):
         if not EMAIL_REGEX.match(postData['email-regi']):
             errors["format"] = "Email format is not invalid!"            
         if len(postData['email-regi']) != 0:
-            # print users.objects.filter(email=postData['email-regi'])            
-            if len(users.objects.filter(email=postData['email-regi'])) != 0:
+            if len(User.objects.filter(email=postData['email-regi'])) != 0:
                 errors["email-duplicate"] = "Email exists already."
         return errors
 
@@ -63,7 +62,7 @@ class UsersManager(models.Manager):
         return errors        
         
 
-class users(models.Model):
+class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name  = models.CharField(max_length=255)
     email      = models.CharField(max_length=255)
@@ -71,16 +70,16 @@ class users(models.Model):
     salt       = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    objects = UsersManager()
+    objects = UserManager()
     def __repr__(self):
         return "<User object: {} {} {} {}>".format(self.first_name, self.last_name, self.email, self.password, self.salt)
     
 
-class wishlist(models.Model):
+class items(models.Model):
     item_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)    
-    user = models.ForeignKey(users, related_name = "user_wish")
-    user_wish = models.ManyToManyField(users, related_name = "added_wish")
+    user = models.ForeignKey(User, related_name = "added_item")
+    user_wishes = models.ManyToManyField(User, related_name = "added_wishes")
     def __repr__(self):
         return "<User object: {}>".format(self.item_name)
