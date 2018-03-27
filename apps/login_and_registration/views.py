@@ -13,6 +13,7 @@ import sys, random, bcrypt
 def index(request):  
     return render(request, 'login_and_registration/index.html')  
 
+
 def login(request):
     if request.method == "POST":
         errors = User.objects.basic_validator(request.POST)
@@ -27,41 +28,6 @@ def login(request):
             request.session['user_name'] = user.first_name                
             return redirect('/dashboard')
 
-def tohome(request):
-    # set 1, items item
-    userObj= User.objects.get(id=request.session['user_id'])        
-    dataset1 = userObj.added_wishes.all() 
-
-    # user item list
-    itemList = []
-    for i in dataset1: 
-        itemList += [{
-            'item_id' :   i.id,
-            'item_name' : i.item_name,
-            'added_by' :  User.objects.get(id=i.user_id).first_name,
-            'date_added' : i.created_at.strftime("%b %d, %Y"),
-            'user_id':     i.user_id
-            }]   
-
-    # other item list 
-    userCur = User.objects.get(id=request.session['user_id'])
-    dataset2 = items.objects.exclude(user_wishes=userCur)
-    otherList = []
-    for i in dataset2: 
-        otherList += [{
-            'item_id' :   i.id,
-            'item_name' : i.item_name,
-            'added_by' :  User.objects.get(id=i.user_id).first_name,
-            'date_added' : i.created_at.strftime("%b %d, %Y"),
-            'user_id':     i.user_id
-            }]       
-    
-    context = {
-        'item_all' : itemList,
-        'other_list' : otherList
-    }
-
-    return render(request, 'login_and_registration/items.html', context)  
 
 def register(request):
     if request.method == "POST":
@@ -81,9 +47,48 @@ def register(request):
             request.session['user_name'] = user.first_name              
             return redirect('/dashboard')      
     
+# Dashboard
+def tohome(request):
+    # set 1, items item
+    userObj= User.objects.get(id=request.session['user_id'])        
+    dataset1 = userObj.added_wishes.all() 
+
+    # user item list
+    itemList = []
+    for i in dataset1: 
+        itemList += [{
+            'item_id' :   i.id,
+            'item_name' : i.item_name,
+            'added_by' :  User.objects.get(id=i.user_id).first_name,
+            'date_added' : i.created_at.strftime("%b %d, %Y"),
+            'user_id':     i.user_id
+            }]   
+
+    # other item list 
+    userCur = User.objects.get(id=request.session['user_id'])
+    # dataset2 = Item.objects.exclude(user_wishes=request.session['user_id'])   # works the same below
+    dataset2 = Item.objects.exclude(user_wishes=userCur)
+    otherList = []
+    for i in dataset2: 
+        otherList += [{
+            'item_id' :   i.id,
+            'item_name' : i.item_name,
+            'added_by' :  User.objects.get(id=i.user_id).first_name,
+            'date_added' : i.created_at.strftime("%b %d, %Y"),
+            'user_id':     i.user_id
+            }]       
+    
+    context = {
+        'item_all' : itemList,
+        'other_list' : otherList
+    }
+    
+    return render(request, 'login_and_registration/items.html', context)  
+
 
 def additem(request):
     return render(request, 'login_and_registration/create.html')  
+
 
 def adding(request):
     if request.method == "POST":
@@ -94,21 +99,23 @@ def adding(request):
             return redirect("/wish_items/create") 
         else:  
             userObj = User.objects.get(id=request.session['user_id'])
-            items.objects.create(item_name=request.POST['product'], user=userObj)
-            userObj.added_wishes.add(items.objects.last())
+            Item.objects.create(item_name=request.POST['product'], user=userObj)
+            userObj.added_wishes.add(Item.objects.last())
             return redirect("/dashboard") 
+
 
 def addingWL(request, id):
     # print id
     userObj = User.objects.get(id=request.session['user_id'])
     # print userObj.first_name
-    wishItemObj = items.objects.get(id=id)
+    wishItemObj = Item.objects.get(id=id)
     # print wishItemObj.item_name
     userObj.added_wishes.add(wishItemObj)
     return redirect("/dashboard") 
 
+
 def disp(request, id):
-    item = items.objects.get(id=id)
+    item = Item.objects.get(id=id)
     # print item.item_name
     # print item.id
     wish_user = item.user_wishes.all()
@@ -116,14 +123,17 @@ def disp(request, id):
     #     print usr.first_name
     return render(request, 'login_and_registration/iteminfo.html', {'all_wish_user' : wish_user})  
 
+
 def delete(request, id):
-    items.objects.filter(id = id, user_id = request.session['user_id'] ).delete()
+    Item.objects.filter(id = id, user_id = request.session['user_id'] ).delete()
     return redirect("/dashboard") 
+
 
 def remove(request, id):
     userObj = User.objects.get(id=request.session['user_id'])
-    userObj.added_wishes.remove(items.objects.get(id=id))
+    userObj.added_wishes.remove(Item.objects.get(id=id))
     return redirect("/dashboard") 
+
 
 def logoff(request):
     request.session['user_id'] = ""
