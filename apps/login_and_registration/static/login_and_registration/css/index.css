@@ -67,27 +67,61 @@ h1 {
     margin-right: 20px;
 }
 
-#user-wish {
-    border: 1px solid black;
-    margin-left: 0px;
-    margin-bottom: 30px;
-}
-
-#other-wish {
-    border: 1px solid black;
-    margin-left: 0px;
-}
-
-thead tr th:not(:first-child) {
-    padding-right: 25px;
-    border-left: 1px solid black;
-}
-
-tbody tr td:not(:first-child) {
-    padding-right: 25px;
-    border-left: 1px solid black;
-}
-
 #submit-add {
     margin-left: 600px;
+}
+
+#q-section {
+    width: 400px;
+    height: 500px;
+    border: 1px solid black;
+    display: inline-block;
+    overflow: auto;
+}
+
+#f-section {
+    width: 400px;
+    height: 400px;
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 100px;
+    overflow: auto;
+}
+
+#fav-top {
+    background-color: beige;
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 138px;
+}
+
+#add-quote {
+    width: 300px;
+    height: 180px;
+    display: inline-block;
+    /* border: 1px solid black; */
+    margin-left: 600px;
+}
+
+.in-quote {
+    width: 300px;
+    height: 100px;
+    border: 1px solid black;
+    margin: 5px 5px;
+    padding: 5px;
+}
+
+.post-by {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+.info-name {
+    color: brown;
+    display: inline-block;
+}
+
+.info-msg {
+    margin-bottom: 20px;
 }

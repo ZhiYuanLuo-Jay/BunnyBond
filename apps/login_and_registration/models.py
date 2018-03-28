@@ -33,9 +33,9 @@ class UserManager(models.Manager):
         # print postData     
         errors = {}
         if len(postData['fn']) < 3:
-            errors["fn"] = "First name should be more than 2 characters"
-        if len(postData['ln']) < 3:
-            errors["ln"] = "Last name should be more than 2 characters"            
+            errors["fn"] = "Name should be more than 2 characters"
+        if len(postData['al']) < 3:
+            errors["al"] = "Alias should be more than 2 characters"            
         if len(postData['pasw']) < 8:
             errors["pasw"] = "Password should be more than 7 characters"
         if len(postData['paswcf']) < 8:
@@ -55,16 +55,16 @@ class UserManager(models.Manager):
     def add_validator(self, postData):
         # print postData     
         errors = {}
-        if len(postData['product']) == 0:
-            errors["product"] = "Product entered can not be empty."
-        if len(postData['product']) < 3:
-            errors["product_long"] = "Item name should be more than 2 characters"            
+        if len(postData['quoted_by']) < 4:
+            errors["quoted_by"] = "Quote by should be more than 3 characters."
+        if len(postData['message']) < 11:
+            errors["message"] = "Message should be more than 10 characters."            
         return errors        
         
 
 class User(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name  = models.CharField(max_length=255)
+    name       = models.CharField(max_length=255)
+    alias      = models.CharField(max_length=255)
     email      = models.CharField(max_length=255)
     password   = models.CharField(max_length=255)
     salt       = models.CharField(max_length=255)
@@ -72,14 +72,15 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     objects = UserManager()
     def __repr__(self):
-        return "<User object: {} {} {} {}>".format(self.first_name, self.last_name, self.email, self.password, self.salt)
+        return "<User object: {} {} {} {}>".format(self.name, self.alias, self.email, self.password, self.salt)
     
 
-class Item(models.Model):
-    item_name = models.CharField(max_length=255)
+class Quote(models.Model):
+    quote_name = models.CharField(max_length=255)
+    quote_message = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)    
-    user = models.ForeignKey(User, related_name = "added_item")
-    user_wishes = models.ManyToManyField(User, related_name = "added_wishes")
+    user = models.ForeignKey(User, related_name = "added_quotes")
+    user_favorites = models.ManyToManyField(User, related_name = "added_favorites")
     def __repr__(self):
-        return "<User object: {}>".format(self.item_name)
+        return "<Quote object: {}>".format(self.quote_name)

@@ -9,19 +9,22 @@
 </head>
 
 <body>
-    {# {{all_wish_user}} #}
+    {# {{quote_info}} #}
     <div class="wrapper">
         <div id="page-header">
             <h3>Hello, </h3>
             <h3>{{request.session.user_name}}!</h3>
-            <a id="home-logout" href="/dashboard">Home</a>
+            <a id="home-logout" href="/quotes">Dashboard</a>
             <a href="/logout">logout</a>
         </div>
-        <h3>Users who added this product/item under their list:</h3>
+        <h3>Postes by: {{request.session.post_by_name}}</h3>
+        <h3>Count: {{request.session.num_info}}</h3>
         <br>
-        <br> {% for usr in all_wish_user %}
-        <h4>{{usr.first_name}}</h4>
+        <br>{% for info in quote_info %}
+        <h4 class="info-name">{{info.quote_name}}: </h4>
+        <h4 class="info-msg">{{info.quote_message}}</h4>
         {% endfor %}
+
 
 
 

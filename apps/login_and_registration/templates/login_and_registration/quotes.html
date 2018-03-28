@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Quotes</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Welcome, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <a id="home-logout" href="/logout">logout</a>
+        </div>
+
+        <h3>Quotable Quotes</h3>
+        {# {{all_quotes}} #}
+        <div id="q-section">
+            {% for quote in all_quotes %}
+            <div class="in-quote">
+                <form action="/addFav/{{quote.quote_id}}" method='POST'>
+                    {% csrf_token %}
+                    <h4>{{quote.quote_name}}: {{quote.quote_message}}</h4>
+                    <br>
+                    <h5 class="post-by">Posted by <a href="/dispQuote/{{quote.user_id}}">{{quote.posted_by}}</a></h5>
+                    <input class="post-by" type="submit" value="Add to My List">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        {# {{all_favor}} #}
+        <div id="f-section">
+            <h3 id="fav-top">Your Favorites</h3>
+            {% for favor in all_favor %}
+            <div class="in-quote">
+                <form action="/remove/{{favor.fav_id}}" method='POST'>
+                    {% csrf_token %}
+                    <h4>{{favor.fav_name}}: {{favor.fav_message}}</h4>
+                    <br>
+                    <h5 class="post-by">Posted by <a href="/dispQuote/{{favor.fav_user_id}}">{{favor.fav_posted_by}}</a></h5>
+                    <input class="post-by" type="submit" value="Remove to My List">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if messages %} {% for message in messages %}
+        <h3 style="color:orange; margin-left:500px;">{{message}}</h3>
+        {% endfor %} {% endif %}
+        <div id="add-quote">
+            <h2>Contribute a Quote:</h2>
+            <br>
+            <br>
+            <form action='/addQuote' method='POST'>
+                {% csrf_token %}
+                <div>
+                    <label>Quote By: </label>
+                    <input type="text" id="#" name="quoted_by">
+                    <label>Message: </label>
+                    <textarea name="message" rows="3" cols="19"></textarea>
+                </div>
+                <input style="Margin-left:250px;" class="submit-add" type="submit" name="add-quote" value="Submit">
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>
