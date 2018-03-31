@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create Bill</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Hello, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <h4 style="color:goldenrod;" id="home-star">Stars earned: {{request.session.star_earned}} </h4>
+            <a id="home-logout" href="/main">Home</a>
+            <a href="/logout">logout</a>
+        </div>
+        <h3 style="color:lightcoral">Create a New Bill</h3>
+        <br> {% if messages %} {% for message in messages %}
+        <h3 style="color:orange">{{message}}</h3>
+        {% endfor %} {% endif %}
+        <br>
+        <form action='/addBill' method='POST'>
+            {% csrf_token %}
+            <div>
+                <label>Bill Name </label>
+                <input type="text" class="bill-inpt" name="bill_name">
+                <label>$ Amount</label>
+                <input type="text" class="bill-inpt" name="bill_amount">
+                <label>Due Date</label>
+                <br>
+                <input type="date" style="width:160px" class="bill-date" name="due_date" min="2000-01-02">
+                <input class="submit-add" type="submit" name="bill_date" value="Add">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

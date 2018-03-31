@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Money Pool</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Welcome, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <h4 style="color:goldenrod;" id="home-star">Stars earned: {{request.session.star_earned}} </h4>
+            <a id="home-logout" href="/logout">logout</a>
+        </div>
+
+        {% if messages %} {% for message in messages %}
+        <h1 style="color:orange">{{message}}</h1>
+        {% endfor %} {% endif %}
+
+        <div id="add-donation">
+            <h2>Make a Donation:</h2>
+            <br>
+            <br>
+            <form action='/addFund' method='POST'>
+                {% csrf_token %}
+                <div>
+                    <label class="don">Fund Amount: </label>
+                    <input type="text" id="#" name="donation_amount">
+                    <br>
+                    <label class="don">Message: </label>
+                    <textarea name="message" rows="3" cols="19"></textarea>
+                </div>
+                <input style="Margin-left:183px;" class="submit-add" type="submit" name="add-quote" value="Submit">
+            </form>
+        </div>
+
+        <br>
+        <a href="/main">Go Back</a>
+    </div>
+</body>
+
+</html>

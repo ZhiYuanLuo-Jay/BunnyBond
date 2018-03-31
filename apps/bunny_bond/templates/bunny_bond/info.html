@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User Posts list</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
+</head>
+
+<body>
+    {# {{user_infos}} #}
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Welcome, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <h4 style="color:goldenrod;" id="home-star">Stars earned: {{request.session.star_earned}} </h4>
+            <a id="home-logout" href="/logout">logout</a>
+        </div>
+        <h3>Postes by: {{request.session.task_creator}}</h3>
+        <h3>Count: {{request.session.num_info}}</h3>
+        <br>
+        <br>
+        <h3>Past posting: </h3>{% for user in user_infos %}
+        <div class="task-info">
+            <p class="info-name" style="color:black;">Task: {{user.task_name}} </p>
+            <h4 class="info-msg" style="color:goldenrod;">Stars: {{user.star_amount}}</h4>
+        </div>
+        {% endfor %}
+
+        <a href="/main" style="margin-left:250px;">Go Back</a>
+
+
+    </div>
+</body>
+
+</html>

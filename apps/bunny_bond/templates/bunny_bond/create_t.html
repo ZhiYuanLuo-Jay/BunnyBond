@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create Task</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Hello, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <h4 style="color:goldenrod;" id="home-star">Stars earned: {{request.session.star_earned}} </h4>
+            <a id="home-logout" href="/main">Home</a>
+            <a href="/logout">logout</a>
+        </div>
+        <h3 style="color:green">Create a Community Task</h3>
+        <br> {% if messages %} {% for message in messages %}
+        <h3 style="color:orange">{{message}}</h3>
+        {% endfor %} {% endif %}
+        <br>
+        <form action='/addTask' method='POST'>
+            {% csrf_token %}
+            <div>
+                <div name="task_name">
+                    <h3>Task options</h3>
+                    <input type="radio" name="task_name" value="Lawn Care" checked>
+                    <label class="t-option">Lawn Care</label>
+                    <input type="radio" name="task_name" value="Wash Dish">
+                    <label class="t-option">Wash Dish</label>
+                    <input type="radio" name="task_name" value="Walk a dog">
+                    <label class="t-option">Walk a dog</label>
+                    <input type="radio" name="task_name" value="Trimming Tree">
+                    <label class="t-option">Trimming Tree</label>
+                    <input type="radio" name="task_name" value="Car Wash">
+                    <label class="t-option">Car Wash</label>
+                    <input type="radio" name="task_name" value="Hair Cut">
+                    <label class="t-option">Hair Cut</label>
+                    <input type="radio" name="task_name" value="Pick up fruit">
+                    <label class="t-option">Pick up fruit</label>
+                    <input type="radio" name="task_name" value="Drop off mail">
+                    <label class="t-option">Drop off mail</label>
+                </div>
+                <br>
+                <br>
+                <label>Star amount</label>
+                <input type="text" class="bill-inpt" name="star_amount">
+                <label>Work Date</label>
+                <br>
+                <input type="date" style="width:160px" class="work-date" name="work_date" min="2000-01-02">
+                <input class="submit-add" type="submit" value="Add">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bunny Bond</title>
+    <!-- linking a css style sheet -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="page-header">
+            <h3>Welcome, </h3>
+            <h3>{{request.session.user_name}}!</h3>
+            <h4 style="color:goldenrod;" id="home-star">Stars earned: {{request.session.star_earned}} </h4>
+            <a id="home-logout" href="/logout">logout</a>
+            <h4>
+                <a style="color:black" href="/donate">No time to help in-person? Your Donation can help, too.</a>
+                <p style="display:inline-block; margin-left:220px; color:goldenrod;">Formula: 20 stars = $100</p>
+            </h4>
+        </div>
+
+        <h3 style="color:red; display:inline-block">Monthly Bills</h3>
+        <a href="/cBill" style="margin-left:20px; color:darkred">Add Bills</a>
+        <label style="margin-left:30px; color:darkred;">Bill Balance: $ {{request.session.bill_balance}}</label>
+        <label style="margin-left:150px; color:goldenrod;">Donation Fund: {{request.session.fund_amount}}</label>
+        <br> {#{{all_bills}}#}
+        <div id="m-section">
+            {% for bill in all_bills %}
+            <div class="in-billed">
+                <form action="/paidRemove/{{bill.bill_id}}" method='POST'>
+                    {% csrf_token %}
+                    <h4>{{bill.bill_name}}: {{bill.bill_amount}}</h4>
+                    <br>
+                    <h4 class="paid">{{bill.bill_due_date}}</h4>
+                    <input type="submit" style="background-color: rgb(240, 211, 211); margin-left:20px;" value="      Pay off      ">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        {# {{all_tasks}} #}
+        <div id="outter-task">
+            <div id="q-section">
+                <h3 id="fav-top" style="color:green; display:inline-block">Community Request</h3>
+                <a href="/cTask" style="margin-left:20px; color:darkgreen">Add Request</a>
+                <br> {% for task in all_tasks %}
+                <div class="in-task">
+                    <form action="/accept/{{task.task_id}}" method='POST'>
+                        {% csrf_token %}
+                        <h4>Task: {{task.task_name}}</h4>
+                        <h4>Star to earn: <label style="color:rgb(199, 170, 5);">{{task.star_amount}}</label></h4>
+                        <h5 class="post-by">Posted by <a href="/disp/{{task.task_creator_id}}">{{task.task_posted_by}}</a></h5>
+                        <input style="margin-left:30px; background-color:lightgreen;" class="post-by" type="submit" value="     Accept     ">
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <h3 id="other">
+                <a href="/donate">
+                    <img src="{% static 'bunny_bond/img/Bunny_Bond_Needs_help.jpg' %}" alt="Smiley face" height="152" width="267">
+                    <img src="{% static 'bunny_bond/img/cards.jpg' %}" alt="Smiley face" height="150" width="120">
+                </a>
+                <p style="display:inline-block; vertical-align:top;">Our Community needs Your help.</p>
+
+            </h3>
+        </div>
+    </div>
+</body>
+
+</html>

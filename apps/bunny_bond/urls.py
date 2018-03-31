@@ -2,15 +2,23 @@ from django.conf.urls import url
 from . import views           
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'^quotes$', views.home),       
+    url(r'^main$', views.home),       
     url(r'^login$', views.login),       
     url(r'^signup$', views.register),       
     url(r'^logout$', views.logoff),   
-    url(r'^addQuote$', views.adding),   
-    url(r'^addFav/(?P<id>\d+)$', views.addingFav),   
-    url(r'^dispQuote/(?P<id>\d+)$', views.disp),   
-    url(r'^remove/(?P<id>\d+)$', views.remove),   
-    
+    url(r'^cBill$', views.seebill),     
+    url(r'^addBill$', views.addingBill),   
+    url(r'^cTask$', views.seetask),   
+    url(r'^paidRemove/(?P<id>\d+)$', views.paidRemove),   
+    url(r'^addTask$', views.addingTask),   
+    url(r'^donate$', views.seefund),   
+    url(r'^addFund$', views.addingFund),   
+    url(r'^disp/(?P<id>\d+)$', views.disp),   
+    url(r'^accept/(?P<id>\d+)$', views.acceptTask),   
+
+    # url(r'^addFav/(?P<id>\d+)$', views.addingFav),   
+    # url(r'^disp/(?P<id>\d+)$', views.disp),   
+        
     # url(r'^wish_items/create$', views.additem),     
     # url(r'^dispList/(?P<id>\d+)$', views.disp),   
     # url(r'^delete/(?P<id>\d+)$', views.delete),   

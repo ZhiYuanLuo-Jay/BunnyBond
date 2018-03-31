@@ -2,58 +2,58 @@
 <html lang="en">
 
 <head>
-    <title>login_and_registration</title>
+    <title>Bunny Bond</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'login_and_registration/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'bunny_bond/css/style.css' %}">
 </head>
 
 <body>
     {# {{friends}} #}
-    <div class="wrapper">
-
-        {% if messages %} {% for message in messages %}
+    <div class="wrapper" id="set-back">
+        <h1 style="text-align:center; color:lightskyblue">Welcome to Bond, Bunny Bond</h1>
+        <br> {% if messages %} {% for message in messages %}
         <h1 style="color:orange">{{message}}</h1>
         {% endfor %} {% endif %}
 
-        <h1>Registration</h1>
+        <h1 style="color:lightskyblue">Registration</h1>
         <!-- registration -->
         <form action='/signup' method='POST'>
             {% csrf_token %}
             <div>
-                <label for="name">Name:</label>
+                <label class="index-lbl">Name:</label>
                 <input type="text" id="name" name="fn">
             </div>
             <div>
-                <label for="alias">Last Name:</label>
+                <label class="index-lbl">Last Name:</label>
                 <input type="text" id="alias" name="al">
             </div>
             <div>
-                <label for="email">Email:</label>
+                <label class="index-lbl">Email:</label>
                 <input type="text" id="email-regi" name="email-regi">
             </div>
             <div>
-                <label for="password">Password:</label>
+                <label class="index-lbl">Password:</label>
                 <input type="password" id="password-regi" name="pasw">
             </div>
             <div>
-                <label for="password_confirm">Confrim PW:</label>
+                <label class="index-lbl">Confrim PW:</label>
                 <input type="password" id="password_confirm" name="paswcf">
             </div>
             <input class="submit-btn" type="submit" name="register" value="Register">
         </form>
 
 
-        <h1>Login</h1>
+        <h1 style="color:lightskyblue">Login</h1>
         <!-- login -->
         <form action='/login' method='POST'>
             <div class="form-square">
                 {% csrf_token %}
                 <div>
-                    <label>Email: </label>
+                    <label class="index-lbl">Email: </label>
                     <input type="text" id="email-logi" name="email">
                 </div>
                 <div>
-                    <label>Password: </label>
+                    <label class="index-lbl">Password: </label>
                     <input type="password" id="password-logi" name="pswd">
                 </div>
 

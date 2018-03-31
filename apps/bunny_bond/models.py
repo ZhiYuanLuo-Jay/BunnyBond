@@ -55,11 +55,24 @@ class UserManager(models.Manager):
     def add_validator(self, postData):
         # print postData     
         errors = {}
-        if len(postData['quoted_by']) < 4:
-            errors["quoted_by"] = "Quote by should be more than 3 characters."
-        if len(postData['message']) < 11:
-            errors["message"] = "Message should be more than 10 characters."            
+        if len(postData['bill_name']) == 0:
+            errors["bill_name"] = "Bill Name needs to be entered."
+        if len(postData['bill_amount']) == 0:
+            errors["bill_amount"] = "Bill Amount needs to be input."            
+        if len(postData['due_date']) == 0:
+            errors["due_date"] = "Due date should be entered."                        
         return errors        
+
+    def task_validator(self, postData):
+        # print postData     
+        errors = {}
+        # if len(postData['task_name']) == 0:
+        #     errors["task_name"] = "Task Name needs to be entered."
+        if len(postData['star_amount']) == 0:
+            errors["star_amount"] = "Star Amount needs to be input."            
+        if len(postData['work_date']) == 0:
+            errors["work_date"] = "Work date should be entered."                        
+        return errors             
         
 
 class User(models.Model):
@@ -75,12 +88,42 @@ class User(models.Model):
         return "<User object: {} {} {} {}>".format(self.name, self.alias, self.email, self.password, self.salt)
     
 
-class Quote(models.Model):
-    quote_name = models.CharField(max_length=255)
-    quote_message = models.CharField(max_length=255)
+class Bill(models.Model):
+    bill_name = models.CharField(max_length=255)
+    bill_amount = models.DecimalField(max_digits=9, decimal_places=2)
+    due_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)    
-    user = models.ForeignKey(User, related_name = "added_quotes")
-    user_favorites = models.ManyToManyField(User, related_name = "added_favorites")
+    user = models.ForeignKey(User, related_name = "bills")
     def __repr__(self):
-        return "<Quote object: {}>".format(self.quote_name)
+        return "<Bill object: {} {}>".format(self.bill_name, self.bill_amount)
+
+class Task(models.Model):
+    task_name  = models.CharField(max_length=255)
+    task_completed = models.BooleanField()
+    star_amount = models.IntegerField()
+    work_date   = models.DateTimeField()
+    created_at  = models.DateTimeField(auto_now_add = True)
+    updated_at  = models.DateTimeField(auto_now = True)
+    creator = models.ForeignKey(User, related_name = "tasks")
+    finisher = models.ManyToManyField(User, related_name = "jobs")
+    def __repr__(self):
+        return "<Task object: {} {} {}>".format(self.task_name, self.task_completed, self.star_value)
+
+class Funding(models.Model):
+    donation_amount = models.DecimalField(max_digits=9, decimal_places=2)
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)    
+    donator = models.ForeignKey(User, related_name = "funds")
+    def __repr__(self):
+        return "<Bill object: {}>".format(self.donation_amount)        
+
+# class Star(models.Model):
+#     star_amount = models.IntegerField()
+#     created_at = models.DateTimeField(auto_now_add = True)
+#     updated_at = models.DateTimeField(auto_now = True)    
+#     earner = models.ForeignKey(User, related_name = "stars")
+#     user_stars = models.ManyToManyField(User, related_name = "added_stars")
+#     def __repr__(self):
+#         return "<Bill object: {}>".format(self.star_amount)       
